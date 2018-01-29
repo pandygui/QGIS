@@ -322,12 +322,16 @@ void QgsClipboard::setText( const QString &text )
 
 bool QgsClipboard::hasFormat( const QString &mimeType ) const
 {
-  return QApplication::clipboard()->mimeData()->hasFormat( mimeType );
+  if (QApplication::clipboard()->mimeData())
+    return QApplication::clipboard()->mimeData()->hasFormat( mimeType );
+  return false;
 }
 
 QByteArray QgsClipboard::data( const QString &mimeType ) const
 {
-  return QApplication::clipboard()->mimeData()->data( mimeType );
+  if (QApplication::clipboard()->mimeData())
+    return QApplication::clipboard()->mimeData()->data( mimeType );
+  return QByteArray();
 }
 
 void QgsClipboard::systemClipboardChanged()
